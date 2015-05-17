@@ -2,6 +2,11 @@ polyfill-next-selector { content: '.container .title'; }
 .container ::content .title {
   font-size: 16px;
   margin-bottom: 4px;
+
+  /*truncate*/
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 polyfill-next-selector { content: '.container .subtitle'; }
@@ -12,8 +17,8 @@ polyfill-next-selector { content: '.container .subtitle'; }
 
 polyfill-next-selector { content: '.container core-image'; }
 .container ::content core-image {
-  height: 40px;
-  width: 40px;
+  min-height: 40px;
+  min-width: 40px;
   border-radius: 50%;
   margin-right: 16px;
   background-color: #E1F5FE;

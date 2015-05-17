@@ -45,10 +45,10 @@
       validForm: false,
 
       eventDelegates: {
-        reset: 'reset'
+        refresh: 'refresh'
       },
 
-      reset: function () {
+      refresh: function () {
         this.$.localhost.value = this.settings.hosts.local;
         this.$.remotehost.value = this.settings.hosts.remote;
         this.$.localhostDecorator.validate();
@@ -56,7 +56,7 @@
       },
 
       ready: function () {
-        this.reset();
+        this.refresh();
       },
 
       validate: function () {

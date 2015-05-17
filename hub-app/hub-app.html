@@ -43,9 +43,9 @@
       settings: {
         hosts: {
           local: 'http://192.168.0.12:8080',
-          remote: 'https://api-test.evrythng.net'
+          remote: 'https://api.evrythng.com'
         },
-        appApiKey: 'o8xZ4ga4wsY87WpAo8bR8iN398L4bUxgCPiIIbSTOk8nB37FT29l8KnJcHpkZ3SHlXkEM9YbvY20GMOD'
+        appApiKey: 'MatqgDV9dnWAgLZv6Q2q2SSsDEGlPsLI5XyCyiVqNF1zFXeaULP9UwHUzvRyxsNKCrCPZ8C2DY3fW5jq'
       },
 
       // Bind property watchers
@@ -94,35 +94,29 @@
          history.pushState(dummyState, '');
          }.bind(this);*/
 
-        /*EVT.setup({
-         apiUrl: this.hosts.remote
-         });
+        EVT.setup({
+          apiUrl: this.settings.hosts.remote
+        });
 
-         // EVT App init
-         this.app = new EVT.App({
-         apiKey: this.appApiKey,
-         facebook: true
-         });
-
-         var $this = this;
-
-         this.app.$init.then(function (result) {
-
-         $this.user = result.user;
-         $this.refresh();
-
-         }, function (err) {
-         // TODO show toast on error
-         /!*showAlert('Could not initialize application. Facebook App Id not configured in ' +
-         'Dashboard or host not supported in FB Application settings.');*!/
-         console.log('App init Error:', err);
-         });*/
+        // EVT App init
+        this.app = new EVT.App({
+          apiKey: this.settings.appApiKey,
+          facebook: true
+        });
 
         var $this = this;
 
-        setTimeout(function () {
-          $this.showLogin();
-        }, 2000);
+        this.app.$init.then(function (result) {
+
+          $this.user = result.user;
+          $this.refresh();
+
+        }, function (err) {
+          // TODO show toast on error
+          /*showAlert('Could not initialize application. Facebook App Id not configured in ' +
+           'Dashboard or host not supported in FB Application settings.');*/
+          console.log('App init Error:', err);
+        });
       }
 
     });

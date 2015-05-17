@@ -32,9 +32,9 @@
 
           <core-animated-pages selected="{{menuSelected}}" flex>
 
-            <device-list name="devices" user="{{user}}" device="{{device}}"></device-list>
+            <device-list name="devices" id="devices" user="{{user}}" device="{{device}}"></device-list>
 
-            <group-list name="groups" user="{{user}}" group="{{group}}"></group-list>
+            <group-list name="groups" id="groups" user="{{user}}" group="{{group}}"></group-list>
 
             <settings-pane name="settings" id="settings" settings="{{settings}}"></settings-pane>
 
@@ -52,10 +52,7 @@
 
       menuSelectedChanged: function () {
         this.$.drawerPanel.togglePanel();
-
-        if(this.menuSelected === 'settings'){
-          this.$.settings.fire('reset');
-        }
+        this.$[this.menuSelected].fire('refresh');
       }
 
     });

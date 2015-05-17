@@ -10,3 +10,7 @@ core-toolbar {
 .content {
   padding-top: 8px;
 }
+
+.spinner {
+  margin-top: 16px;
+}
