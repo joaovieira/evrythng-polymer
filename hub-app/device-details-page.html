@@ -1,0 +1,85 @@
+<link rel="import" href="../bower_components/core-image/core-image.html">
+<link rel="import" href="../bower_components/core-icons/core-icons.html">
+<link rel="import" href="../bower_components/core-icon/core-icon.html">
+
+<polymer-element name="device-details-page" attributes="device" fit vertical layout auto>
+  <template>
+
+    <link rel="stylesheet" href="device-details-page.css">
+
+    <section id="details" layout horizontal>
+      <core-image src="{{device.product.photo}}" preload sizing="cover"></core-image>
+
+      <div class="details" flex layout vertical>
+        <div class="item">
+          <div class="title">{{device.name}}</div>
+          <div class="label">{{device.id}}</div>
+          <div class="description" hidden?="{{!device.description}}">{{device.description}}</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="product" hidden?="{{!device.product}}" layout horizontal>
+      <core-icon icon="class"></core-icon>
+
+      <div class="details" flex layout vertical>
+        <div class="item">
+          <div class="title">{{device.product.name}}</div>
+          <div class="subtitle">{{device.product.id}}</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="identifiers" hidden?="{{device.identifiers | isEmpty}}" layout horizontal>
+      <core-icon icon="info-outline"></core-icon>
+
+      <div class="details" flex layout vertical>
+        <template repeat="{{identifier in keys(device.identifiers)}}">
+          <div class="item">
+            <div class="title">{{device.identifiers[identifier]}}</div>
+            <div class="label">{{identifier}}</div>
+          </div>
+        </template>
+      </div>
+    </section>
+
+    <section id="custom-fields" hidden?="{{device.customFields | isEmpty}}" layout horizontal>
+      <core-icon icon="description"></core-icon>
+
+      <div class="details" flex layout vertical>
+        <template repeat="{{field in keys(device.customFields)}}">
+          <div class="item">
+            <div class="title">{{isEmpty(device.customFields[field]) ? "None" : device.customFields[field]}}</div>
+            <div class="label">{{field}}</div>
+          </div>
+        </template>
+      </div>
+    </section>
+
+    <section id="tags" hidden?="{{device.tags | isEmpty}}" layout horizontal>
+      <core-icon icon="loyalty"></core-icon>
+
+      <div class="details" flex layout horizontal>
+        <div class="item">
+          <template repeat="{{tag in device.tags}}">
+            <span class="tag">{{tag}}</span>
+          </template>
+        </div>
+      </div>
+    </section>
+
+  </template>
+  <script>
+    Polymer('device-details-page', {
+
+      keys: function (obj) {
+        return obj? Object.keys(obj) : [];
+      },
+
+      isEmpty: function (obj) {
+        return Array.isArray(obj) && obj.length === 0 || this.keys(obj).length === 0;
+      }
+
+    });
+  </script>
+</polymer-element>

@@ -1,0 +1,145 @@
+<link rel="import" href="device-list-item.html">
+<link rel="import" href="../bower_components/core-list/core-list.html">
+<link rel="import" href="../bower_components/core-image/core-image.html">
+<link rel="import" href="../bower_components/polymer-filters/polymer-filters.html">
+
+<polymer-element name="device-list" attributes="user device" fit vertical layout auto>
+  <template>
+
+    <link rel="stylesheet" href="device-list.css">
+
+    <core-list name="list" data="{{thngs | orderBy('name') }}" selection="{{device}}" height="72" flex>
+
+      <template>
+
+        <device-list-item>
+          <core-image src="{{model.product.photo}}" preload sizing="cover"></core-image>
+          <div class="title">{{model.name}}</div>
+          <div class="subtitle">{{model.id}}</div>
+        </device-list-item>
+
+      </template>
+
+    </core-list>
+
+  </template>
+  <script>
+    Polymer('device-list', {
+
+      thngs: [
+        {
+          "id": "UfT7ycAfsVKayw4MC9KQ9d7p",
+          "createdAt": 1429021237330,
+          "customFields": {
+            "_dimmer": "UfyNxPdXsepRBMwBXGG6Cfwd"
+          },
+          "updatedAt": 1431539478296,
+          "name": "Lamp-01-01",
+          "description": "MY cool device that sends some random properties sometimes.",
+          "properties": {
+            "am i dom?": true,
+            "key": "Am I Dom?",
+            "light": 10,
+            "proximity": 100,
+            "status": true,
+            "what": 10000
+          },
+          "identifiers": {
+            "bluetooth": "Agsd232gsagds435tbsgfd"
+          },
+          "product":{
+            "id": "UfcNbtFKsBpaTw46CQpQtcNt",
+            "name": "Lamp",
+            "photo": "http://thumbs2.ebaystatic.com/d/l225/m/mgLVDSY6OFD2MVlRuC9Yr3Q.jpg"
+          },
+          "tags": ['test', 'cool']
+        },
+        {
+          "id": "UCcNydAh8BpaV6aeXm3qWEem",
+          "createdAt": 1429021495743,
+          "updatedAt": 1429022252788,
+          "name": "Lamp-02-02",
+          "product": "UfcNbtFKsBpaTw46CQpQtcNt",
+          "properties": {
+            "light": 0,
+            "proximity": 0,
+            "status": false,
+            "temperature": 0
+          }
+        },
+        {
+          "id": "UWy7ydStPB5acaH6CtKtteWr",
+          "createdAt": 1429021471499,
+          "customFields": {
+            "_dimmer": "UWyNbsNUse5ayan6CtpQtcEk"
+          },
+          "updatedAt": 1429022237942,
+          "name": "Lamp-02-01",
+          "product": "UfcNbtFKsBpaTw46CQpQtcNt",
+          "properties": {
+            "light": 0,
+            "proximity": 0,
+            "status": false,
+            "temperature": 0
+          },
+          "identifiers": {}
+        },
+        {
+          "id": "UfyNTyPSPVpaBMaeXm3MfhRg",
+          "createdAt": 1429021409095,
+          "customFields": {
+            "_dimmer": "UfyNxPdXsepRBMwBXGG6Cfwd"
+          },
+          "updatedAt": 1429022223506,
+          "name": "Lamp-01-02",
+          "product": "UfcNbtFKsBpaTw46CQpQtcNt",
+          "properties": {
+            "light": 0,
+            "proximity": 0,
+            "status": false,
+            "temperature": 0
+          },
+          "identifiers": {}
+        },
+        {
+          "id": "UWyNbsNUse5ayan6CtpQtcEk",
+          "createdAt": 1429020371548,
+          "customFields": {
+            "_available_devices": [],
+            "_thng_hub": "UWyrxpVmsepRcwHqW9KQQatb"
+          },
+          "updatedAt": 1429020427111,
+          "name": "Dimmer-02",
+          "product": "UCy7x7fy8BpacwHqW9pttbqe",
+          "identifiers": {}
+        },
+        {
+          "id": "UfyNxPdXsepRBMwBXGG6Cfwd",
+          "createdAt": 1429020214569,
+          "customFields": {
+            "_available_devices": [],
+            "_thng_hub": "UWyrxpVmsepRcwHqW9KQQatb"
+          },
+          "updatedAt": 1429020302718,
+          "name": "Dimmer-01",
+          "product": "UCy7x7fy8BpacwHqW9pttbqe",
+          "identifiers": {}
+        },
+        {
+          "id": "UWyrxpVmsepRcwHqW9KQQatb",
+          "createdAt": 1429019465573,
+          "customFields": {
+            "_allowed_devices": [],
+            "_current_devices": []
+          },
+          "tags": [],
+          "updatedAt": 1429019886394,
+          "name": "Thng-Hub-01",
+          "product": "UfcrSFqdPeKwywnMW9ptst9t",
+          "identifiers": {}
+        }
+      ]
+
+    });
+  </script>
+</polymer-element>

@@ -1,0 +1,78 @@
+<link rel="import" href="../bower_components/paper-input/paper-input-decorator.html">
+<link rel="import" href="../bower_components/core-icons/core-icons.html">
+<link rel="import" href="../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../bower_components/paper-toast/paper-toast.html">
+
+<polymer-element name="settings-page" attributes="hosts" vertical layout auto>
+  <template>
+
+    <link rel="stylesheet" href="settings-page.css">
+
+    <section id="hosts" on-change="{{validate}}">
+
+      <div class="subheader">Hosts</div>
+
+      <paper-input-decorator id="localhostDecorator" label="Local Hub Address"
+                             autoValidate error="Please type a URL."
+                             layout vertical floatinglabel>
+        <input is="core-input"
+               id="localhost"
+               required
+               type="url"
+               placeholder="E.g. http://192.168.1.7:8080">
+      </paper-input-decorator>
+
+      <paper-input-decorator id="remotehostDecorator" label="EVRYTHNG API Address"
+                             autoValidate error="Please type a URL."
+                             layout vertical floatinglabel>
+        <input is="core-input"
+               id="remotehost"
+               required
+               type="url"
+               placeholder="E.g. https://api.evrythng.com">
+      </paper-input-decorator>
+
+    </section>
+
+    <paper-fab icon="done" on-tap="{{updateSettings}}" disabled?="{{!validForm}}"></paper-fab>
+
+    <paper-toast id="toast" text="Settings updated."></paper-toast>
+
+  </template>
+  <script>
+    Polymer('settings-page', {
+
+      validForm: false,
+
+      eventDelegates: {
+        reset: 'reset'
+      },
+
+      reset: function () {
+        this.$.localhost.value = this.hosts.local;
+        this.$.remotehost.value = this.hosts.remote;
+        this.$.localhostDecorator.validate();
+        this.$.remotehostDecorator.validate();
+      },
+
+      ready: function () {
+        this.reset();
+      },
+
+      validate: function () {
+        this.validForm = this.$.localhost.validity.valid && this.$.remotehost.validity.valid;
+      },
+
+      updateSettings: function () {
+        if(this.validForm){
+          this.hosts = {
+            local: this.$.localhost.value,
+            remote: this.$.remotehost.value
+          };
+          this.$.toast.show();
+        }
+      }
+
+    });
+  </script>
+</polymer-element>

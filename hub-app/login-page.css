@@ -1,0 +1,34 @@
+:host{
+  background: #039BE5;
+}
+
+.login-bg{
+  margin: -50px -20px -100px;
+}
+
+.login-bg > core-icon {
+  height: 100%;
+  width: 100%;
+}
+
+.welcome {
+  position: relative;
+  padding: 0 40px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  font-size: 16px;
+  background-color: #039BE5;
+  color: white;
+}
+
+.welcome.wide {
+  width: 512px;
+  margin: 0 auto;
+}
+
+paper-fab {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  background: #355089;
+}

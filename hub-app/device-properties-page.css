@@ -1,0 +1,26 @@
+.prop-item {
+  border-top: 1px solid lightgray;
+  padding: 16px;
+}
+
+.prop-item .value {
+  color: #757575;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.prop-item:first-of-type {
+  border: 0;
+}
+
+paper-toggle-button::shadow [checked] .toggle {
+  background-color: #0288D1;
+}
+
+paper-toggle-button::shadow [checked] .toggle-ink {
+  color: #039BE5;
+}
+
+paper-icon-button {
+  color: #757575;
+}

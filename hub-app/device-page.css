@@ -1,0 +1,40 @@
+/*TODO reuse tab style in groups page*/
+
+core-header-panel {
+  height: 100%;
+}
+
+core-toolbar {
+  background-color: #EEEEEE;
+  height: 112px;
+}
+
+core-toolbar paper-icon-button {
+  color: #757575;
+}
+
+#tabs {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  text-transform: uppercase;
+  background-color: transparent;
+  color: #039BE5;
+}
+
+/*TODO below does not work for some reason...*/
+/*paper-tabs.blue::shadow #selectionBar {
+  background-color: #039BE5;
+}*/
+core-toolbar /deep/ #selectionBar {
+  background-color: #039BE5;
+}
+
+#tabs paper-tab::shadow #ink {
+  color: #9E9E9E;
+}
+
+.content {
+  padding-top: 8px;
+}

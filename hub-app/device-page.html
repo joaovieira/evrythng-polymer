@@ -1,0 +1,67 @@
+<link rel="import" href="device-details-page.html">
+<link rel="import" href="device-properties-page.html">
+<link rel="import" href="../bower_components/core-header-panel/core-header-panel.html">
+<link rel="import" href="../bower_components/core-toolbar/core-toolbar.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/core-icons/core-icons.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="../bower_components/swipe-pages/swipe-pages.html">
+<link rel="import" href="../bower_components/swipe-pages/swipe-page.html">
+
+<polymer-element name="device-page" attributes="user device" vertical layout>
+  <template>
+
+    <link rel="stylesheet" href="device-page.css">
+
+    <core-header-panel flex>
+
+      <core-toolbar id="mainheader">
+        <paper-icon-button icon="arrow-back" on-tap="{{goBack}}"></paper-icon-button>
+        <span flex>{{device.name}}</span>
+
+        <div id="tabs" class="bottom fit" horizontal layout>
+
+          <paper-tabs selected="{{tab}}" flex>
+            <paper-tab>Details</paper-tab>
+            <paper-tab>Properties</paper-tab>
+            <paper-tab>Actions</paper-tab>
+          </paper-tabs>
+
+        </div>
+
+      </core-toolbar>
+
+      <div class="content" fit vertical layout>
+
+        <swipe-pages selected="{{tab}}" flex>
+
+          <swipe-page>
+            <device-details-page device="{{device}}"></device-details-page>
+          </swipe-page>
+
+          <swipe-page>
+            <device-properties-page device="{{device}}"></device-properties-page>
+          </swipe-page>
+
+          <swipe-page>
+            Actions
+          </swipe-page>
+
+        </swipe-pages>
+
+      </div>
+
+    </core-header-panel>
+
+  </template>
+  <script>
+    Polymer('device-page', {
+
+      goBack: function () {
+        this.device = null;
+      }
+
+    });
+  </script>
+</polymer-element>

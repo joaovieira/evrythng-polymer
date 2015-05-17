@@ -1,0 +1,29 @@
+{
+  "name": "thng-hub-demo",
+  "version": "0.1.0",
+  "homepage": "https://github.com/evrythng/thng-hub",
+  "authors": [
+    "João Vieira <joao@evrythng.com>"
+  ],
+  "description": "Demo application for Thng-Hub using Polymer.",
+  "main": "app.js",
+  "keywords": [
+    "thng-hub"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "core-elements": "Polymer/core-elements#~0.5.5",
+    "paper-elements": "Polymer/paper-elements#~0.5.5",
+    "topeka-elements": "Polymer/topeka-elements#~0.5.2",
+    "evrythng": "~3.0.1",
+    "polymer-filters": "~0.2.1",
+    "swipe-pages": "TheSeamau5/swipe-pages#master"
+  }
+}

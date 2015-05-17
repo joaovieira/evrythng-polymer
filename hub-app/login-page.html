@@ -1,0 +1,39 @@
+<link rel="import" href="../bower_components/core-icons/core-icons.html">
+<link rel="import" href="../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../bower_components/topeka-elements/category-images.html">
+
+<polymer-element name="login-page" attributes="wide user app" vertical layout auto>
+  <template>
+
+    <link rel="stylesheet" href="login-page.css">
+
+    <div class="login-bg" flex two relative>
+      <core-icon icon="category-images:music" fit></core-icon>
+    </div>
+
+    <div class="welcome {{ {wide: wide} | tokenList }}" flex>
+      <h4>Local Remote Controller</h4>
+      <div>Control your devices locally over your wireless network. Or remotely over the internet.</div>
+      <paper-fab src="f.png" on-tap="{{loginWithFacebook}}"></paper-fab>
+    </div>
+
+    <core-media-query query="min-width: {{responsiveWidth}}" queryMatches="{{wide}}"></core-media-query>
+
+  </template>
+  <script>
+    Polymer('login-page', {
+
+      responsiveWidth: '640px',
+
+      loginWithFacebook: function () {
+        var $this = this;
+
+        this.app.login('facebook').then(function (authResponse) {
+          $this.user = authResponse.user;
+          console.log('User logged in:', $this.user);
+        });
+      }
+
+    });
+  </script>
+</polymer-element>

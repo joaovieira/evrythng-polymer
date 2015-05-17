@@ -1,0 +1,24 @@
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/core-icon-button/core-icon-button.html">
+
+<polymer-element name="device-list-item">
+  <template>
+
+    <link rel="stylesheet" href="device-list-item.css">
+
+    <paper-item class="container" layout horizontal>
+      <content select="core-image"></content>
+
+      <div class="details" layout vertical>
+        <content select=".title"></content>
+        <content select=".subtitle"></content>
+      </div>
+    </paper-item>
+
+  </template>
+  <script>
+    Polymer('device-list-item', {
+
+    });
+  </script>
+</polymer-element>

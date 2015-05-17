@@ -1,0 +1,46 @@
+section core-image {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  background-color: #E1F5FE;
+  margin: 16px;
+}
+
+section core-icon {
+  margin: 24px;
+  color: #039BE5;
+}
+
+section .details {
+  border-top: 1px solid lightgray;
+  color: #757575;
+  font-size: 14px;
+}
+
+section:first-of-type .details {
+  border: 0;
+}
+
+section .label {
+  margin-top: 4px;
+}
+
+section .title {
+  color: black;
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+section .description {
+  margin-top: 16px;
+}
+
+section .item {
+  margin: 16px 16px 16px 0;
+}
+
+section .tag {
+  background-color: lightgray;
+  padding: 1px 4px;
+  border-radius: 2px;
+}

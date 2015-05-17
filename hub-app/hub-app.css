@@ -1,0 +1,13 @@
+:host {
+  height: 100%;
+}
+
+:host /deep/ a {
+  color: inherit;
+}
+
+:host /deep/ .subheader {
+  line-height: 48px;
+  font-size: 14px;
+  color: #9E9E9E;
+}

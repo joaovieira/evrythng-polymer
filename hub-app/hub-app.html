@@ -1,0 +1,143 @@
+<link rel="import" href="login-page.html">
+<link rel="import" href="main-page.html">
+<link rel="import" href="device-page.html">
+<link rel="import" href="../bower_components/core-animated-pages/core-animated-pages.html">
+<link rel="import" href="../bower_components/core-media-query/core-media-query.html">
+<script src="../bower_components/evrythng/dist/evrythng.js"></script>
+
+<polymer-element name="hub-app" vertical layout>
+  <template>
+
+    <link rel="stylesheet" href="hub-app.css">
+
+    <core-animated-pages selected="{{pageSelected}}" transitions="" flex auto>
+
+      <section name="loading">
+        Loading
+      </section>
+
+      <login-page name="login" user="{{user}}" app="{{app}}"></login-page>
+
+      <main-page name="main" user="{{user}}" app="{{app}}" hosts="{{hosts}}" device="{{device}}"></main-page>
+
+      <device-page name="device" user="{{user}}" device="{{device}}"></device-page>
+
+    </core-animated-pages>
+
+  </template>
+  <script>
+    Polymer('hub-app', {
+
+      pageSelected: 'main',
+
+      appApiKey: 'o8xZ4ga4wsY87WpAo8bR8iN398L4bUxgCPiIIbSTOk8nB37FT29l8KnJcHpkZ3SHlXkEM9YbvY20GMOD',
+
+      hosts: {
+        local: 'http://192.168.0.12:8080',
+        remote: 'https://api-test.evrythng.net'
+      },
+
+      // Bind property watchers
+      observe: {
+        user: 'refresh'
+      },
+
+      deviceChanged: function () {
+        if(this.device){
+          this.showDevice();
+        } else {
+          this.showMain();
+        }
+      },
+
+      refresh: function () {
+        if(this.user){
+          this.showMain();
+        } else {
+          this.showLogin();
+        }
+      },
+
+      showLogin: function() {
+        this.pageSelected = 'login';
+      },
+
+      showMain: function() {
+        this.pageSelected = 'main';
+      },
+
+      showDevice: function () {
+        this.pageSelected = 'device';
+      },
+
+      ready: function() {
+        //this.offline = this.test || window.location.search.indexOf('offline') >= 0;
+
+        // "back" button will show categories, unless in profile screen
+        /*window.onpopstate = function() {
+         if (this.selected !== 'profile') {
+         this.showCategories();
+         }
+         // repopulate history state so we get the popstate event again
+         history.pushState(dummyState, '');
+         }.bind(this);*/
+
+        EVT.setup({
+          apiUrl: this.hosts.remote
+        });
+
+        // EVT App init
+        this.app = new EVT.App({
+          apiKey: this.appApiKey,
+          facebook: true
+        });
+
+        var $this = this;
+
+        this.app.$init.then(function (result) {
+
+          $this.user = result.user;
+          $this.refresh();
+
+        }, function (err) {
+          /*showAlert('Could not initialize application. Facebook App Id not configured in ' +
+           'Dashboard or host not supported in FB Application settings.');*/
+          console.log('App init Error:', err);
+        });
+      },
+
+      // event delegates, similar to backbone, on event -> call function
+      /*eventDelegates: {
+       'main': 'showCategories',
+       'score-update': 'computeScore'
+       },*/
+
+
+      // pass data to another page...
+      /*showProfile: function() {
+       this.selected = 'profile';
+       this.$.profile.userDefaults = this.user;
+       },*/
+
+      // how to select pages
+      /*categorySelect: function() {
+       if (this.category) {
+       var n = this.category.name;
+       if (n === 'leaderboard') {
+       this.showLeaderboard();
+       } else if (n === 'profile') {
+       this.showProfile();
+       } else {
+       this.showCategory();
+       }
+       }
+       },*/
+
+      // run when transition between pages finishes
+      /*transitionEndAction: function() {
+       this.disableLeaderboard = (this.selected !== 'leaderboard');
+       }*/
+
+    });
+  </script>
+</polymer-element>

@@ -1,0 +1,58 @@
+core-header-panel {
+  background-color: #F5F5F5;
+  color: #616161;
+}
+
+core-toolbar {
+  background-color: #0288D1;
+  color: white;
+  font-size: 16px;
+}
+
+core-menu {
+  margin: 0;
+}
+
+hr {
+  border: none;
+  height: 1px;
+  background-color: lightgray;
+  margin: 8px 0;
+}
+
+.content {
+  padding-top: 8px;
+}
+
+.menu core-icon {
+  margin-right: 16px;
+  color: #757575;
+}
+
+#menu-header core-image {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  background-color: lightgray;
+}
+
+.footer {
+  margin: 20px;
+  font-size: 11px;
+  opacity: 0.5;
+}
+
+.footer #logo {
+  height: 120px;
+  width: 120px;
+  margin-bottom: -10px;
+}
+
+.footer #signature {
+  z-index: 1;
+}
+
+.footer #signature core-icon {
+  height: 12px;
+  width: 12px;
+}

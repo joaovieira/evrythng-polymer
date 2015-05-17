@@ -1,0 +1,17 @@
+section {
+  padding: 0 16px;
+}
+
+paper-fab {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  background: #f5f5f5;
+  color: black;
+  z-index: 13;
+}
+
+paper-toast {
+  bottom: 24px;
+  left: 16px;
+}

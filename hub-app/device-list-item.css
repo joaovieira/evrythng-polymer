@@ -1,0 +1,20 @@
+polyfill-next-selector { content: '.container .title'; }
+.container ::content .title {
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+polyfill-next-selector { content: '.container .subtitle'; }
+.container ::content .subtitle {
+  color: #757575;
+  font-size: 14px;
+}
+
+polyfill-next-selector { content: '.container core-image'; }
+.container ::content core-image {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  margin-right: 16px;
+  background-color: #E1F5FE;
+}

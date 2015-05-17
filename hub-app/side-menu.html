@@ -1,0 +1,82 @@
+<link rel="import" href="../bower_components/core-header-panel/core-header-panel.html">
+<link rel="import" href="../bower_components/core-toolbar/core-toolbar.html">
+<link rel="import" href="../bower_components/core-menu/core-menu.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/core-image/core-image.html">
+<link rel="import" href="../bower_components/core-icon/core-icon.html">
+<link rel="import" href="../bower_components/core-icons/core-icons.html">
+<link rel="import" href="../bower_components/topeka-elements/category-images.html">
+
+<polymer-element name="side-menu" attributes="user selected heading" vertical layout>
+  <template>
+
+    <link rel="stylesheet" href="side-menu.css">
+
+    <core-header-panel flex>
+
+      <core-toolbar id="menu-header">
+        <core-image
+            _src="https://graph.facebook.com/{{user.facebook.id}}/picture?width=40&height=40"
+            sizing="cover" preload></core-image>
+        <span>{{user.facebook.first_name}} {{user.facebook.last_name}}</span>
+      </core-toolbar>
+
+      <div class="content" fit vertical layout>
+        <div class="menu" flex>
+          <core-menu selected="{{selected}}" on-core-select="{{setTitle}}">
+            <paper-item name="devices">
+              <core-icon icon="settings-remote"></core-icon>
+              Devices
+            </paper-item>
+            <paper-item name="groups">
+              <core-icon icon="group-work"></core-icon>
+              Groups
+            </paper-item>
+            <hr>
+            <paper-item name="settings">
+              <core-icon icon="settings"></core-icon>
+              Settings
+            </paper-item>
+          </core-menu>
+
+          <paper-item on-tap="{{logout}}">
+            <core-icon icon="open-in-new"></core-icon>
+            Logout
+          </paper-item>
+        </div>
+
+        <div class="footer" self-center self-end-justified vertical layout center>
+          <core-icon id="logo" icon="category-images:music"></core-icon>
+          <div id="signature">
+            Made with
+            <core-icon icon="favorite"></core-icon>
+            by the <a href="https://www.evrythng.com">EVRYTHNG</a> folks.
+          </div>
+        </div>
+
+      </div>
+
+    </core-header-panel>
+
+  </template>
+  <script>
+    Polymer('side-menu', {
+
+      selected: 'devices',
+
+      setTitle: function (e, detail) {
+        if (detail.isSelected) {
+          this.heading = detail.item.textContent;
+        }
+      },
+
+      logout: function () {
+        var $this = this;
+        this.user.logout().then(function () {
+          $this.user = null;
+        });
+      }
+
+    });
+  </script>
+</polymer-element>
