@@ -23,9 +23,9 @@
 
       <core-header-panel main>
 
-        <core-toolbar id="mainheader" hero-id="header" hero>
-          <paper-icon-button cross-fade-delayed icon="menu" core-drawer-toggle></paper-icon-button>
-          <span cross-fade-delayed flex>{{heading}}</span>
+        <core-toolbar id="mainheader" hero-id="header" hero?="{{!disableTransitions}}">
+          <paper-icon-button cross-fade-delayed?="{{!disableTransitions}}" icon="menu" core-drawer-toggle></paper-icon-button>
+          <span cross-fade-delayed?="{{!disableTransitions}}" flex>{{heading}}</span>
         </core-toolbar>
 
         <div class="content" fit vertical layout>

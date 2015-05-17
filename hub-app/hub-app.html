@@ -12,7 +12,7 @@
 
     <core-animated-pages id="animation" selected="{{pageSelected}}" flex
                          transitions="cross-fade cross-fade-delayed slide-up hero-transition"
-                         on-core-animated-pages-transition-prepare="{{cutAnimation}}">
+                         on-core-animated-pages-transition-end="{{transitionEndAction}}">
 
       <section name="loading">
         <div id="loading" fit layout vertical center-center hero-id="header" hero>
@@ -22,7 +22,7 @@
 
       <login-page name="login" user="{{user}}" app="{{app}}"></login-page>
 
-      <main-page name="main" user="{{user}}" settings="{{settings}}" device="{{device}}"></main-page>
+      <main-page id="main" name="main" user="{{user}}" settings="{{settings}}" device="{{device}}"></main-page>
 
       <device-page name="device" user="{{user}}" device="{{device}}"></device-page>
 
@@ -36,10 +36,8 @@
 
       loading: true,
 
-      cutAnimation: function () {
-        if(typeof this.device !== 'undefined'){
-          this.$.animation.complete();
-        }
+      transitionEndAction: function () {
+        this.$.main.disableTransitions = !!this.user;
       },
 
       settings: {
