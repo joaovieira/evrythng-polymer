@@ -1,7 +1,7 @@
 /*TODO reuse tab style in groups page*/
-
 core-header-panel {
   height: 100%;
+  background: white;
 }
 
 core-toolbar {

@@ -13,6 +13,12 @@ core-menu {
   margin: 0;
 }
 
+paper-item {
+  font-size: 14px;
+  color: black;
+  font-weight: 500;
+}
+
 hr {
   border: none;
   height: 1px;
@@ -25,7 +31,7 @@ hr {
 }
 
 .menu core-icon {
-  margin-right: 16px;
+  margin-right: 32px;
   color: #757575;
 }
 

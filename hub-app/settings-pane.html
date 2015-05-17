@@ -3,10 +3,10 @@
 <link rel="import" href="../bower_components/paper-fab/paper-fab.html">
 <link rel="import" href="../bower_components/paper-toast/paper-toast.html">
 
-<polymer-element name="settings-page" attributes="hosts" vertical layout auto>
+<polymer-element name="settings-pane" attributes="settings" vertical layout auto>
   <template>
 
-    <link rel="stylesheet" href="settings-page.css">
+    <link rel="stylesheet" href="settings-pane.css">
 
     <section id="hosts" on-change="{{validate}}">
 
@@ -40,7 +40,7 @@
 
   </template>
   <script>
-    Polymer('settings-page', {
+    Polymer('settings-pane', {
 
       validForm: false,
 
@@ -49,8 +49,8 @@
       },
 
       reset: function () {
-        this.$.localhost.value = this.hosts.local;
-        this.$.remotehost.value = this.hosts.remote;
+        this.$.localhost.value = this.settings.hosts.local;
+        this.$.remotehost.value = this.settings.hosts.remote;
         this.$.localhostDecorator.validate();
         this.$.remotehostDecorator.validate();
       },
@@ -65,7 +65,7 @@
 
       updateSettings: function () {
         if(this.validForm){
-          this.hosts = {
+          this.settings.hosts = {
             local: this.$.localhost.value,
             remote: this.$.remotehost.value
           };

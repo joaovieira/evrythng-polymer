@@ -2,7 +2,7 @@
 <link rel="import" href="main-page.html">
 <link rel="import" href="device-page.html">
 <link rel="import" href="../bower_components/core-animated-pages/core-animated-pages.html">
-<link rel="import" href="../bower_components/core-media-query/core-media-query.html">
+<link rel="import" href="../bower_components/paper-spinner/paper-spinner.html">
 <script src="../bower_components/evrythng/dist/evrythng.js"></script>
 
 <polymer-element name="hub-app" vertical layout>
@@ -10,15 +10,19 @@
 
     <link rel="stylesheet" href="hub-app.css">
 
-    <core-animated-pages selected="{{pageSelected}}" transitions="" flex auto>
+    <core-animated-pages id="animation" selected="{{pageSelected}}" flex
+                         transitions="cross-fade cross-fade-delayed slide-up hero-transition"
+                         on-core-animated-pages-transition-prepare="{{cutAnimation}}">
 
       <section name="loading">
-        Loading
+        <div id="loading" fit layout vertical center-center hero-id="header" hero>
+          <paper-spinner active="{{loading}}"></paper-spinner>
+        </div>
       </section>
 
       <login-page name="login" user="{{user}}" app="{{app}}"></login-page>
 
-      <main-page name="main" user="{{user}}" app="{{app}}" hosts="{{hosts}}" device="{{device}}"></main-page>
+      <main-page name="main" user="{{user}}" settings="{{settings}}" device="{{device}}"></main-page>
 
       <device-page name="device" user="{{user}}" device="{{device}}"></device-page>
 
@@ -28,13 +32,22 @@
   <script>
     Polymer('hub-app', {
 
-      pageSelected: 'main',
+      pageSelected: 'loading',
 
-      appApiKey: 'o8xZ4ga4wsY87WpAo8bR8iN398L4bUxgCPiIIbSTOk8nB37FT29l8KnJcHpkZ3SHlXkEM9YbvY20GMOD',
+      loading: true,
 
-      hosts: {
-        local: 'http://192.168.0.12:8080',
-        remote: 'https://api-test.evrythng.net'
+      cutAnimation: function () {
+        if(typeof this.device !== 'undefined'){
+          this.$.animation.complete();
+        }
+      },
+
+      settings: {
+        hosts: {
+          local: 'http://192.168.0.12:8080',
+          remote: 'https://api-test.evrythng.net'
+        },
+        appApiKey: 'o8xZ4ga4wsY87WpAo8bR8iN398L4bUxgCPiIIbSTOk8nB37FT29l8KnJcHpkZ3SHlXkEM9YbvY20GMOD'
       },
 
       // Bind property watchers
@@ -51,6 +64,8 @@
       },
 
       refresh: function () {
+        this.loading = false;
+
         if(this.user){
           this.showMain();
         } else {
@@ -66,13 +81,12 @@
         this.pageSelected = 'main';
       },
 
-      showDevice: function () {
+      showDevice: function() {
         this.pageSelected = 'device';
       },
 
       ready: function() {
-        //this.offline = this.test || window.location.search.indexOf('offline') >= 0;
-
+        // TODO HTML5 history
         // "back" button will show categories, unless in profile screen
         /*window.onpopstate = function() {
          if (this.selected !== 'profile') {
@@ -82,61 +96,36 @@
          history.pushState(dummyState, '');
          }.bind(this);*/
 
-        EVT.setup({
-          apiUrl: this.hosts.remote
-        });
+        /*EVT.setup({
+         apiUrl: this.hosts.remote
+         });
 
-        // EVT App init
-        this.app = new EVT.App({
-          apiKey: this.appApiKey,
-          facebook: true
-        });
+         // EVT App init
+         this.app = new EVT.App({
+         apiKey: this.appApiKey,
+         facebook: true
+         });
+
+         var $this = this;
+
+         this.app.$init.then(function (result) {
+
+         $this.user = result.user;
+         $this.refresh();
+
+         }, function (err) {
+         // TODO show toast on error
+         /!*showAlert('Could not initialize application. Facebook App Id not configured in ' +
+         'Dashboard or host not supported in FB Application settings.');*!/
+         console.log('App init Error:', err);
+         });*/
 
         var $this = this;
 
-        this.app.$init.then(function (result) {
-
-          $this.user = result.user;
-          $this.refresh();
-
-        }, function (err) {
-          /*showAlert('Could not initialize application. Facebook App Id not configured in ' +
-           'Dashboard or host not supported in FB Application settings.');*/
-          console.log('App init Error:', err);
-        });
-      },
-
-      // event delegates, similar to backbone, on event -> call function
-      /*eventDelegates: {
-       'main': 'showCategories',
-       'score-update': 'computeScore'
-       },*/
-
-
-      // pass data to another page...
-      /*showProfile: function() {
-       this.selected = 'profile';
-       this.$.profile.userDefaults = this.user;
-       },*/
-
-      // how to select pages
-      /*categorySelect: function() {
-       if (this.category) {
-       var n = this.category.name;
-       if (n === 'leaderboard') {
-       this.showLeaderboard();
-       } else if (n === 'profile') {
-       this.showProfile();
-       } else {
-       this.showCategory();
-       }
-       }
-       },*/
-
-      // run when transition between pages finishes
-      /*transitionEndAction: function() {
-       this.disableLeaderboard = (this.selected !== 'leaderboard');
-       }*/
+        setTimeout(function () {
+          $this.showLogin();
+        }, 2000);
+      }
 
     });
   </script>
