@@ -1,0 +1,32 @@
+{
+  "name": "evrythng",
+  "version": "3.0.1",
+  "main": "dist/evrythng.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tools",
+    "lib",
+    "src",
+    "*.html",
+    "build.txt",
+    "DEVELOPMENT.md",
+    "karma*.js",
+    "Gruntfile.js"
+  ],
+  "license": "Apache-2.0",
+  "endpoint": "https://github.com/evrythng/evrythng.js.git",
+  "dependencies": {},
+  "homepage": "https://github.com/evrythng/evrythng.js",
+  "_release": "3.0.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "3.0.1",
+    "commit": "3fe2a62b8f5a476a3812df97778fb9b5e2bd8c82"
+  },
+  "_source": "git://github.com/evrythng/evrythng.js.git",
+  "_target": "~3.0.1",
+  "_originalSource": "evrythng"
+}

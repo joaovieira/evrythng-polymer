@@ -1,0 +1,36 @@
+{
+  "name": "evrythng",
+  "version": "3.0.1",
+  "main": "lib/evrythng.js",
+  "description": "Javascript SDK to communicate with EVRYTHNG REST API",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/evrythng/evrythng.js.git"
+  },
+  "keywords": [
+    "evrythng",
+    "sdk",
+    "library",
+    "thng",
+    "thngs",
+    "evt",
+    "iot",
+    "internet of things",
+    "wot",
+    "web of things"
+  ],
+  "author": "EVRYTHNG Ltd.",
+  "licenses": [
+    {
+      "type": "Apache-2.0",
+      "url": "https://github.com/evrythng/evrythng.js/blob/master/LICENSE"
+    }
+  ],
+  "readmeFilename": "README.md",
+  "dependencies": {
+    "request": "^2.53.0"
+  },
+  "ignore": [
+    "dist"
+  ]
+}
