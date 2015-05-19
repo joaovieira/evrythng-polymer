@@ -27,7 +27,8 @@
     Polymer('device-list', {
 
       observe: {
-        user: 'refresh'
+        user: 'refresh',
+        device: 'refresh'
       },
 
       eventDelegates: {
@@ -35,7 +36,7 @@
       },
 
       refresh: function () {
-        if (this.user) {
+        if (this.user && !this.device) {
           var $this = this;
 
           this.user.thng().read({
