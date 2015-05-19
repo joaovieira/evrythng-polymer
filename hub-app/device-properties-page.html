@@ -81,7 +81,9 @@
       deviceChanged: function () {
         if(this.device){
           var $this = this;
-          this.device.property().read().then(function (properties) {
+          this.device.property().read({
+            localhost: true
+          }).then(function (properties) {
             $this.properties = properties;
             $this.properties.forEach(function (prop) {
               prop.isBoolean = typeof prop.value === 'boolean';

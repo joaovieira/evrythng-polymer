@@ -96,7 +96,9 @@
          }.bind(this);*/
 
         EVT.setup({
-          apiUrl: this.settings.hosts.remote
+          apiUrl: this.settings.hosts.remote,
+          localhostUrl: this.settings.hosts.local,
+          timeout: 1000
         });
 
         // EVT App init

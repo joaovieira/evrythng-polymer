@@ -38,7 +38,9 @@
         if (this.user) {
           var $this = this;
 
-          this.user.thng().read().then(function (thngs) {
+          this.user.thng().read({
+            localhost: true
+          }).then(function (thngs) {
             $this.thngs = thngs;
 
             var productIds = [];

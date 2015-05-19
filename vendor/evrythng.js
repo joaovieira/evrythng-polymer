@@ -1541,8 +1541,26 @@ define('connect',[
     }
   }
 
+    function ajaxPatch(options, successCallback, errorCallback) {
+
+        if(EVT.settings.localhostUrl && options.localhost){
+            var oldUrl = EVT.settings.apiUrl;
+            EVT.settings.apiUrl = EVT.settings.localhostUrl;
+
+            return ajax(options, successCallback, errorCallback).catch(function (e) {
+                EVT.settings.apiUrl = oldUrl;
+
+                return ajax(options, successCallback, errorCallback);
+            });
+
+        } else {
+            return ajax(options, successCallback, errorCallback);
+        }
+
+    }
+
   // Attach ajax method to the EVT module.
-  EVT.api = ajax;
+  EVT.api = ajaxPatch;
 
   return EVT;
 
