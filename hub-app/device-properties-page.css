@@ -1,6 +1,5 @@
-.prop-item {
+.prop-item ~ .prop-item {
   border-top: 1px solid lightgray;
-  padding: 16px;
 }
 
 .prop-item .value {
@@ -9,8 +8,9 @@
   margin-top: 4px;
 }
 
-.prop-item:first-of-type {
+.prop-item {
   border: 0;
+  padding: 16px;
 }
 
 paper-toggle-button::shadow [checked] .toggle {

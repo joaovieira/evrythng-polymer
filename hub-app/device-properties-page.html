@@ -12,12 +12,19 @@
 
     <link rel="stylesheet" href="device-properties-page.css">
 
+    <div class="empty" self-center hidden?="{{properties.length}}">
+      No properties
+    </div>
+
     <template repeat="{{prop in properties | orderBy('key') | booleanFirst}}">
 
       <template if="{{prop.isBoolean}}">
         <div class="prop-item" horizontal layout>
           <span flex>{{prop.key | capitalize}}</span>
-          <paper-toggle-button checked="{{prop.value}}"></paper-toggle-button>
+          <paper-toggle-button checked="{{prop.value}}"
+                               on-change="{{toggleProperty}}"
+                               data-property-key="{{prop.key}}"
+              ></paper-toggle-button>
         </div>
       </template>
 
@@ -28,50 +35,62 @@
             <span class="value">{{prop.value}}</span>
           </div>
 
-          <paper-icon-button icon="create" on-tap={{updateProperty}}
-                             data-property-key="{{prop.key}}"
-                             data-property-value="{{prop.value}}">
+          <paper-icon-button icon="create" on-tap={{openDialog}}
+                             data-property-key="{{prop.key}}">
           </paper-icon-button>
 
         </div>
       </template>
 
-      <paper-action-dialog id="updateProperty" heading="Update {{selected.key}}" backdrop>
-        <paper-input-decorator floatingLabel label="New value">
-          <input type="number" is="core-input" value="{{selected.value}}" placeholder="E.g. 20, Light blue">
-        </paper-input-decorator>
-
-        <paper-button dismissive>Cancel</paper-button>
-        <paper-button affirmative autofocus>Update</paper-button>
-      </paper-action-dialog>
-
     </template>
+
+    <paper-action-dialog id="propertyDialog" heading="Update {{selected.key}}" closeSelector="[dismissive]" backdrop>
+      <paper-input-decorator id="newValueDecorator" floatingLabel autoValidate
+                             error="Please use the same type."
+                             label="New value">
+        <input is="core-input"
+               id="newValue"
+               required
+               _type="{{getType(selected.value)}}"
+               placeholder="E.g. 20, Light blue">
+      </paper-input-decorator>
+
+      <paper-button dismissive>Cancel</paper-button>
+      <paper-button affirmative autofocus on-tap="{{updateProperty}}">Update</paper-button>
+    </paper-action-dialog>
 
   </template>
   <script>
     Polymer('device-properties-page', {
 
-      properties: [{
-        key: 'proximity',
-        value: 10,
-        isBoolean: false
-      }, {
-        key: 'status',
-        value: true,
-        isBoolean: true
-      },{
-        key: 'color',
-        value: 'blue',
-        isBoolean: false
-      }, {
-        key: 'boolean',
-        value: false,
-        isBoolean: true
-      }, {
-        key: 'number',
-        value: 235,
-        isBoolean: false
-      }],
+      properties: [],
+
+      getType: function (input) {
+        return typeof input === 'string' ? 'text' : 'number';
+      },
+
+      selectProperty: function (key) {
+        for(var i = 0; i < this.properties.length; i++){
+          if(this.properties[i].key === key){
+            this.selected = this.properties[i];
+            break;
+          }
+        }
+      },
+
+      deviceChanged: function () {
+        if(this.device){
+          var $this = this;
+          this.device.property().read().then(function (properties) {
+            $this.properties = properties;
+            $this.properties.forEach(function (prop) {
+              prop.isBoolean = typeof prop.value === 'boolean';
+            });
+          });
+        } else {
+          this.properties = [];
+        }
+      },
 
       booleanFirst: function (input) {
         var lastBooleanIndex = 0,
@@ -88,13 +107,49 @@
         return ret;
       },
 
-      updateProperty: function (event, detail, target) {
-        this.selected = {
-          key: target.attributes['data-property-key'].value,
-          value: target.attributes['data-property-value'].value
-        };
+      openDialog: function (event, detail, target) {
+        this.selectProperty(target.attributes['data-property-key'].value);
 
-        this.$.updateProperty.open();
+        this.$.newValue.value = this.selected.value;
+        this.$.newValueDecorator.validate();
+
+        this.$.propertyDialog.toggle();
+      },
+
+      updateProperty: function () {
+        if(this.$.newValue.validity.valid){
+          var $this = this,
+              value = this.$.newValue.value,
+              type = this.$.newValue.type;
+
+          // validate number in text input
+          if(type === 'text' && !isNaN(value)){
+            this.$.newValueDecorator.isInvalid = true;
+            return;
+          }
+
+          if(type === 'number'){
+            value = parseInt(value);
+          }
+
+          this.device.property(this.selected.key).update(value).then(function (updated) {
+            $this.selected.value = updated[0].value;
+            $this.selected = null;
+
+            $this.$.propertyDialog.toggle();
+          });
+        }
+      },
+
+      toggleProperty: function (event, detail, target) {
+        this.selectProperty(target.attributes['data-property-key'].value);
+
+        var $this = this,
+            value = target.checked;
+
+        this.device.property(this.selected.key).update(value).then(function (updated) {
+          $this.selected = null;
+        });
       }
 
     });

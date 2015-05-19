@@ -42,29 +42,30 @@
             $this.thngs = thngs;
 
             var productIds = [];
-            for (var i = 0; i < thngs.length; i++) {
-              if(thngs[i].product && productIds.indexOf(thngs[i].product) === -1){
-                productIds.push(thngs[i].product);
+            thngs.forEach(function (thng) {
+              if(thng.product && productIds.indexOf(thng.product) === -1){
+                productIds.push(thng.product);
               }
-            }
+            });
 
             $this.user.product().read({
               params: {
                 ids: productIds.join(',')
               }
             }).then(function (products) {
-              for (var k = 0; k < thngs.length; k++) {
-                for (var j = 0; j < products.length; j++) {
-                  if(products[j]){
-                    if(thngs[k].product === products[j].id){
-                      $this.thngs[k].product = products[j];
+              $this.thngs.forEach(function (thng) {
+                products.forEach(function (product) {
+                  if(products){
+                    if(thng.product === product.id){
+                      thng.product = product;
                     }
                   }
+                });
+
+                if(typeof thng.product === 'string'){
+                  thng.product = null;
                 }
-                if(typeof $this.thngs[k].product === 'string'){
-                  $this.thngs[k].product = null;
-                }
-              }
+              });
             });
 
           });

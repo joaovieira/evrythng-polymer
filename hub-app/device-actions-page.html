@@ -4,11 +4,15 @@
 
     <link rel="stylesheet" href="device-actions-page.css">
 
-    Actions
+    <div class="empty" self-center hidden?="{{actions.length}}">
+      No actions
+    </div>
 
   </template>
   <script>
     Polymer('device-actions-page', {
+
+      actions: []
 
     });
   </script>
