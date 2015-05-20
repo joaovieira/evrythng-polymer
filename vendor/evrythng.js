@@ -1148,7 +1148,7 @@ define('network/cors',[
         response = null;
 
     if (xhr.responseText) {
-      if (headers['content-type'] === 'application/json') {
+      if (headers['content-type'].indexOf('application/json') !== -1) {
         // try to parse the response if looks like json
         try {
           response = JSON.parse(xhr.responseText);
