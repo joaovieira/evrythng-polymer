@@ -53,6 +53,12 @@
       menuSelectedChanged: function () {
         this.$.drawerPanel.togglePanel();
         this.$[this.menuSelected].fire('refresh');
+      },
+
+      userChanged: function () {
+        if(!this.user){
+          this.$.drawerPanel.togglePanel();
+        }
       }
 
     });
