@@ -24,8 +24,8 @@
 
       <div class="details" flex layout vertical>
         <div class="item">
-          <div class="title">{{device.product.fn}}</div>
-          <div class="subtitle">{{device.product.id}}</div>
+          <div class="title">{{device.product.fn || 'Unknown'}}</div>
+          <div class="subtitle">{{device.product.id || device.product}}</div>
         </div>
       </div>
     </section>

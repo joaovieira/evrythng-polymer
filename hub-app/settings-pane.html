@@ -69,6 +69,15 @@
             local: this.$.localhost.value,
             remote: this.$.remotehost.value
           };
+
+          localStorage.setItem('localhost', this.settings.hosts.local);
+          localStorage.setItem('remotehost', this.settings.hosts.remote);
+
+          EVT.setup({
+            apiUrl: this.settings.hosts.remote,
+            localhostUrl: this.settings.hosts.local
+          });
+
           this.$.toast.show();
         }
       }

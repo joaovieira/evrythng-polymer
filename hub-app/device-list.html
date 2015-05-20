@@ -8,6 +8,10 @@
 
     <link rel="stylesheet" href="device-list.css">
 
+    <div class="empty" self-center hidden?="{{thngs.length}}">
+      No devices
+    </div>
+
     <core-list name="list" data="{{thngs | orderBy('name') }}" selection="{{device}}" height="72" flex>
 
       <template>

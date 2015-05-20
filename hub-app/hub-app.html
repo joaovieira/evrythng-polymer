@@ -43,10 +43,10 @@
 
       settings: {
         hosts: {
-          local: 'http://192.168.0.12:8080',
-          remote: 'https://api.evrythng.com'
+          local: localStorage.getItem('localhost') || 'http://192.168.0.12:8080',
+          remote: localStorage.getItem('remotehost') || 'https://api-test.evrythng.net'
         },
-        appApiKey: 'MatqgDV9dnWAgLZv6Q2q2SSsDEGlPsLI5XyCyiVqNF1zFXeaULP9UwHUzvRyxsNKCrCPZ8C2DY3fW5jq'
+        appApiKey: 'o8xZ4ga4wsY87WpAo8bR8iN398L4bUxgCPiIIbSTOk8nB37FT29l8KnJcHpkZ3SHlXkEM9YbvY20GMOD'
       },
 
       // Bind property watchers

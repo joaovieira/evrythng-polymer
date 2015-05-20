@@ -51,8 +51,9 @@
         <input is="core-input"
                id="newValue"
                required
-               _type="{{getType(selected.value)}}"
-               placeholder="E.g. 20, Light blue">
+               _type="{{selected.inputType}}"
+               placeholder="E.g. 20, Light blue"
+               value="{{selected.inputValue}}">
       </paper-input-decorator>
 
       <paper-button dismissive>Cancel</paper-button>
@@ -73,6 +74,8 @@
         for(var i = 0; i < this.properties.length; i++){
           if(this.properties[i].key === key){
             this.selected = this.properties[i];
+            this.selected.inputType = this.getType(this.selected.value);
+            this.selected.inputValue = this.selected.value;
             break;
           }
         }
@@ -112,10 +115,9 @@
       openDialog: function (event, detail, target) {
         this.selectProperty(target.attributes['data-property-key'].value);
 
-        this.$.newValue.value = this.selected.value;
-        this.$.newValueDecorator.validate();
+        this.$.newValueDecorator.isInvalid = false;
 
-        this.$.propertyDialog.toggle();
+        this.$.propertyDialog.open();
       },
 
       updateProperty: function () {
@@ -138,7 +140,7 @@
             $this.selected.value = updated[0].value;
             $this.selected = null;
 
-            $this.$.propertyDialog.toggle();
+            $this.$.propertyDialog.close();
           });
         }
       },
@@ -149,7 +151,7 @@
         var $this = this,
             value = target.checked;
 
-        this.device.property(this.selected.key).update(value).then(function (updated) {
+        this.device.property(this.selected.key).update(value).then(function () {
           $this.selected = null;
         });
       }
