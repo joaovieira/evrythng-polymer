@@ -6,59 +6,61 @@
 <link rel="import" href="../bower_components/paper-slider/paper-slider.html">
 <link rel="import" href="../bower_components/paper-toggle-button/paper-toggle-button.html">
 
-<polymer-element name="settings-pane" attributes="settings" vertical layout auto>
+<polymer-element name="settings-pane" attributes="settings" fit vertical layout auto>
   <template>
 
     <link rel="stylesheet" href="settings-pane.css">
 
-    <section id="hosts" on-change="{{validate}}">
+    <div class="scrollable-panel">
+      <section id="hosts" on-change="{{validate}}">
 
-      <div class="subheader">Hosts</div>
+        <div class="subheader">Hosts</div>
 
-      <paper-input-decorator id="localhostDecorator" label="Local Hub Address"
-                             autoValidate error="Please type a URL." floatinglabel>
-        <input is="core-input"
-               id="localhost"
-               required
-               type="url"
-               placeholder="E.g. http://192.168.1.7:8080">
-      </paper-input-decorator>
+        <paper-input-decorator id="localhostDecorator" label="Local Hub Address"
+                               autoValidate error="Please type a URL." floatinglabel>
+          <input is="core-input"
+                 id="localhost"
+                 required
+                 type="url"
+                 placeholder="E.g. http://192.168.1.7:8080">
+        </paper-input-decorator>
 
-      <paper-input-decorator id="remotehostDecorator" label="EVRYTHNG API Address"
-                             autoValidate error="Please type a URL." floatinglabel>
-        <input is="core-input"
-               id="remotehost"
-               required
-               type="url"
-               placeholder="E.g. https://api.evrythng.com">
-      </paper-input-decorator>
+        <paper-input-decorator id="remotehostDecorator" label="EVRYTHNG API Address"
+                               autoValidate error="Please type a URL." floatinglabel>
+          <input is="core-input"
+                 id="remotehost"
+                 required
+                 type="url"
+                 placeholder="E.g. https://api.evrythng.com">
+        </paper-input-decorator>
 
-    </section>
+      </section>
 
-    <section id="authentication" on-change="{{validate}}">
+      <section id="authentication" on-change="{{validate}}">
 
-      <div class="subheader">Authentication</div>
+        <div class="subheader">Authentication</div>
 
-      <paper-input-decorator id="apiKeyDecorator" label="Application API Key"
-                             autoValidate error="Please fill this field." floatinglabel>
-        <paper-autogrow-textarea id="apiKeyAutogrow">
+        <paper-input-decorator id="apiKeyDecorator" label="Application API Key"
+                               autoValidate error="Please fill this field." floatinglabel>
+          <paper-autogrow-textarea id="apiKeyAutogrow">
           <textarea is="core-input"
                     id="apikey"
                     required
                     placeholder="Application API Key"></textarea>
-        </paper-autogrow-textarea>
-      </paper-input-decorator>
+          </paper-autogrow-textarea>
+        </paper-input-decorator>
 
-    </section>
+      </section>
 
-    <section id="device" on-change="{{validate}}">
+      <section id="device" on-change="{{validate}}">
 
-      <div class="subheader">Device</div>
+        <div class="subheader">Device</div>
 
-      <label class="label-text">Property Polling Period (seconds)</label>
-      <paper-slider editable is="core-input" id="polling" min="0" max="5" snaps="true" step="1" pin="true"></paper-slider>
+        <label class="label-text">Property Polling Period (seconds)</label>
+        <paper-slider editable is="core-input" id="polling" min="0" max="5" snaps="true" step="1" pin="true"></paper-slider>
 
-    </section>
+      </section>
+    </div>
 
     <paper-fab icon="done" on-tap="{{updateSettings}}" disabled?="{{!validForm}}"></paper-fab>
 
