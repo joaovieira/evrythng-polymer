@@ -11,7 +11,7 @@
 <link rel="import" href="../bower_components/swipe-pages/swipe-page.html">
 <link rel="import" href="../bower_components/core-animated-pages/transitions/slide-up.html">
 
-<polymer-element name="device-page" attributes="user device" vertical layout>
+<polymer-element name="device-page" attributes="user device settings" vertical layout>
   <template>
 
     <link rel="stylesheet" href="device-page.css">
@@ -43,11 +43,11 @@
           </swipe-page>
 
           <swipe-page>
-            <device-properties-page device="{{device}}"></device-properties-page>
+            <device-properties-page device="{{device}}" polling="{{settings.pollingPeriod}}"></device-properties-page>
           </swipe-page>
 
           <swipe-page>
-            <device-actions-page device="{{device}}"></device-actions-page>
+            <device-actions-page device="{{device}}" user="{{user}}"></device-actions-page>
           </swipe-page>
 
         </swipe-pages>

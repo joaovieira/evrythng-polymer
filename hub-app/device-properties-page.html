@@ -1,13 +1,12 @@
 <link rel="import" href="../bower_components/polymer-filters/polymer-filters.html">
 <link rel="import" href="../bower_components/paper-toggle-button/paper-toggle-button.html">
-<link rel="import" href="../bower_components/paper-slider/paper-slider.html">
 <link rel="import" href="../bower_components/paper-dialog/paper-action-dialog.html">
 <link rel="import" href="../bower_components/paper-input/paper-input-decorator.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/core-icons/core-icons.html">
 
-<polymer-element name="device-properties-page" attributes="device" fit vertical layout auto>
+<polymer-element name="device-properties-page" attributes="device polling" fit vertical layout auto>
   <template>
 
     <link rel="stylesheet" href="device-properties-page.css">
@@ -19,7 +18,7 @@
     <template repeat="{{prop in properties | orderBy('key') | booleanFirst}}">
 
       <template if="{{prop.isBoolean}}">
-        <div class="prop-item" horizontal layout>
+        <div class="prop-item" horizontal layout center>
           <span flex>{{prop.key | capitalize}}</span>
           <paper-toggle-button checked="{{prop.value}}"
                                on-change="{{toggleProperty}}"
@@ -60,11 +59,15 @@
       <paper-button affirmative autofocus on-tap="{{updateProperty}}">Update</paper-button>
     </paper-action-dialog>
 
+    <paper-toast id="toast" text="Property updated."></paper-toast>
+
   </template>
   <script>
     Polymer('device-properties-page', {
 
       properties: [],
+
+      loopInterval: null,
 
       getType: function (input) {
         return typeof input === 'string' ? 'text' : 'number';
@@ -81,19 +84,28 @@
         }
       },
 
+      refresh: function () {
+        var $this = this;
+        this.device.property().read({
+          localhost: true
+        }).then(function (properties) {
+          $this.properties = properties;
+          $this.properties.forEach(function (prop) {
+            prop.isBoolean = typeof prop.value === 'boolean';
+          });
+        });
+      },
+
       deviceChanged: function () {
         if(this.device){
-          var $this = this;
-          this.device.property().read({
-            localhost: true
-          }).then(function (properties) {
-            $this.properties = properties;
-            $this.properties.forEach(function (prop) {
-              prop.isBoolean = typeof prop.value === 'boolean';
-            });
-          });
+          if(this.polling !== 0){
+            this.loopInterval = setInterval(this.refresh.bind(this), this.polling);
+          } else {
+            this.refresh();
+          }
         } else {
           this.properties = [];
+          clearTimeout(this.loopInterval);
         }
       },
 
@@ -136,11 +148,14 @@
             value = parseInt(value);
           }
 
-          this.device.property(this.selected.key).update(value).then(function (updated) {
+          this.device.property(this.selected.key).update(value, {
+            localhost: true
+          }).then(function (updated) {
             $this.selected.value = updated[0].value;
             $this.selected = null;
 
             $this.$.propertyDialog.close();
+            $this.$.toast.show();
           });
         }
       },
@@ -151,8 +166,11 @@
         var $this = this,
             value = target.checked;
 
-        this.device.property(this.selected.key).update(value).then(function () {
+        this.device.property(this.selected.key).update(value, {
+          localhost: true
+        }).then(function () {
           $this.selected = null;
+          $this.$.toast.show();
         });
       }
 

@@ -1,18 +1,77 @@
+<link rel="import" href="../bower_components/polymer-filters/polymer-filters.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/core-icons/core-icons.html">
+<link rel="import" href="../bower_components/core-icons/image-icons.html">
+<link rel="import" href="../bower_components/paper-toast/paper-toast.html">
 
-<polymer-element name="device-actions-page" attributes="device" fit vertical layout auto>
+<polymer-element name="device-actions-page" attributes="device user" fit vertical layout auto>
   <template>
 
     <link rel="stylesheet" href="device-actions-page.css">
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
 
-    <div class="empty" self-center hidden?="{{actions.length}}">
+    <div class="empty" self-center hidden?="{{actionTypes.length}}">
       No actions
     </div>
+
+    <template repeat="{{actionType in actionTypes | orderBy('name')}}">
+
+      <div class="action-item" horizontal layout center>
+        <span _class="glyphicon glyphicon-{{actionType.customFields.icon || 'bullhorn'}}"></span>
+        <span flex>{{actionType.customFields.displayname || actionType.name}}</span>
+
+        <paper-icon-button icon="image:flash-on" on-tap={{createAction}}
+                           data-actiontype-name="{{actionType.name}}">
+        </paper-icon-button>
+      </div>
+
+    </template>
+
+    <paper-toast id="toast" text="Action created."></paper-toast>
 
   </template>
   <script>
     Polymer('device-actions-page', {
 
-      actions: []
+      actionTypes: [],
+
+      onlyCustom: function (actionTypes) {
+        var ret = [];
+
+        actionTypes.forEach(function (actionType) {
+          if(actionType.name[0] === '_'){
+            ret.push(actionType);
+          }
+        });
+
+        return ret;
+      },
+
+      deviceChanged: function () {
+        if(this.device){
+          var $this = this;
+          this.user.actionType().read({
+            localhost: true
+          }).then(function (actionTypes) {
+            $this.actionTypes = $this.onlyCustom(actionTypes);
+          });
+        } else {
+          this.actionTypes = [];
+        }
+      },
+
+      createAction: function (event, detail, target) {
+        var actionType = target.attributes['data-actiontype-name'].value,
+            $this = this;
+
+        this.user.action(actionType).create({
+          thng: $this.device.id
+        },{
+          localhost: true
+        }).then(function () {
+          $this.$.toast.show();
+        });
+      }
 
     });
   </script>

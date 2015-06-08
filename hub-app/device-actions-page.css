@@ -1,0 +1,21 @@
+.action-item ~ .action-item {
+  border-top: 1px solid lightgray;
+}
+
+.action-item {
+  border: 0;
+  padding: 16px;
+  font-size: 16px;
+}
+
+.glyphicon {
+  font-size: 20px;
+  margin-left: 10px;
+  margin-right: 26px;
+  color: #039BE5;
+}
+
+paper-icon-button {
+  color: #FDD835;
+  padding: 0;
+}

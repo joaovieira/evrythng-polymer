@@ -1208,11 +1208,11 @@ define('network/cors',[
     xhr.open(method, url, async);
 
     // Setup headers, including the *Authorization* that holds the Api Key.
-    xhr.setRequestHeader('content-type', 'application/json');
+    xhr.setRequestHeader('Content-Type', 'application/json');
     // Some browsers don't set the right default Accept header
-    xhr.setRequestHeader("accept", options.accepts ? options.accepts : "*/*");
+    xhr.setRequestHeader('Accept', options.accepts ? options.accepts : "*/*");
     if (options.authorization) {
-      xhr.setRequestHeader('authorization', options.authorization);
+      xhr.setRequestHeader('Authorization', options.authorization);
     }
 
     // Set timeout.
@@ -1547,12 +1547,14 @@ define('connect',[
             var oldUrl = EVT.settings.apiUrl;
             EVT.settings.apiUrl = EVT.settings.localhostUrl;
 
-            return ajax(options, successCallback, errorCallback).catch(function (e) {
-                EVT.settings.apiUrl = oldUrl;
-
+            var promise = ajax(options, successCallback, errorCallback).catch(function () {
                 return ajax(options, successCallback, errorCallback);
             });
 
+            // Restore old api URL
+            EVT.settings.apiUrl = oldUrl;
+
+            return promise;
         } else {
             return ajax(options, successCallback, errorCallback);
         }
@@ -3052,7 +3054,7 @@ define('scope/application',[
       delete application.appApiKey;
       return Utils.extend($this, application, true);
 
-    }, function () {
+    }, function (err) {
       Logger.error('There is no application with this API Key.');
 
     }).then(function (app) {

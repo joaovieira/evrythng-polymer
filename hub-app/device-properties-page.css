@@ -5,12 +5,14 @@
 .prop-item .value {
   color: #757575;
   font-size: 14px;
-  margin-top: 4px;
+  margin-top: 2px;
 }
 
 .prop-item {
   border: 0;
   padding: 16px;
+  min-height: 24px;
+  font-size: 16px;
 }
 
 paper-toggle-button::shadow [checked] .toggle {
@@ -23,4 +25,5 @@ paper-toggle-button::shadow [checked] .toggle-ink {
 
 paper-icon-button {
   color: #757575;
+  padding: 0;
 }

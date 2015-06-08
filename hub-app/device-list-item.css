@@ -1,7 +1,7 @@
 polyfill-next-selector { content: '.container .title'; }
 .container ::content .title {
   font-size: 16px;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 
   /*truncate*/
   white-space: nowrap;

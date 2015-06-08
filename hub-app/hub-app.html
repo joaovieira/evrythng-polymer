@@ -25,7 +25,7 @@
 
       <main-page id="main" name="main" user="{{user}}" settings="{{settings}}" device="{{device}}"></main-page>
 
-      <device-page name="device" user="{{user}}" device="{{device}}"></device-page>
+      <device-page name="device" user="{{user}}" settings="{{settings}}" device="{{device}}"></device-page>
 
     </core-animated-pages>
 
@@ -46,7 +46,9 @@
           local: localStorage.getItem('localhost') || 'http://192.168.0.12:8080',
           remote: localStorage.getItem('remotehost') || 'https://api-test.evrythng.net'
         },
-        appApiKey: 'o8xZ4ga4wsY87WpAo8bR8iN398L4bUxgCPiIIbSTOk8nB37FT29l8KnJcHpkZ3SHlXkEM9YbvY20GMOD'
+        appApiKey: localStorage.getItem('apikey') ||
+        'MatqgDV9dnWAgLZv6Q2q2SSsDEGlPsLI5XyCyiVqNF1zFXeaULP9UwHUzvRyxsNKCrCPZ8C2DY3fW5jq',
+        pollingPeriod: localStorage.getItem('polling') || 0
       },
 
       // Bind property watchers

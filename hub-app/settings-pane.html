@@ -2,6 +2,9 @@
 <link rel="import" href="../bower_components/core-icons/core-icons.html">
 <link rel="import" href="../bower_components/paper-fab/paper-fab.html">
 <link rel="import" href="../bower_components/paper-toast/paper-toast.html">
+<link rel="import" href="../bower_components/paper-input/paper-autogrow-textarea.html">
+<link rel="import" href="../bower_components/paper-slider/paper-slider.html">
+<link rel="import" href="../bower_components/paper-toggle-button/paper-toggle-button.html">
 
 <polymer-element name="settings-pane" attributes="settings" vertical layout auto>
   <template>
@@ -13,8 +16,7 @@
       <div class="subheader">Hosts</div>
 
       <paper-input-decorator id="localhostDecorator" label="Local Hub Address"
-                             autoValidate error="Please type a URL."
-                             layout vertical floatinglabel>
+                             autoValidate error="Please type a URL." floatinglabel>
         <input is="core-input"
                id="localhost"
                required
@@ -23,14 +25,38 @@
       </paper-input-decorator>
 
       <paper-input-decorator id="remotehostDecorator" label="EVRYTHNG API Address"
-                             autoValidate error="Please type a URL."
-                             layout vertical floatinglabel>
+                             autoValidate error="Please type a URL." floatinglabel>
         <input is="core-input"
                id="remotehost"
                required
                type="url"
                placeholder="E.g. https://api.evrythng.com">
       </paper-input-decorator>
+
+    </section>
+
+    <section id="authentication" on-change="{{validate}}">
+
+      <div class="subheader">Authentication</div>
+
+      <paper-input-decorator id="apiKeyDecorator" label="Application API Key"
+                             autoValidate error="Please fill this field." floatinglabel>
+        <paper-autogrow-textarea id="apiKeyAutogrow">
+          <textarea is="core-input"
+                    id="apikey"
+                    required
+                    placeholder="Application API Key"></textarea>
+        </paper-autogrow-textarea>
+      </paper-input-decorator>
+
+    </section>
+
+    <section id="device" on-change="{{validate}}">
+
+      <div class="subheader">Device</div>
+
+      <label class="label-text">Property Polling Period (seconds)</label>
+      <paper-slider editable is="core-input" id="polling" min="0" max="5" snaps="true" step="1" pin="true"></paper-slider>
 
     </section>
 
@@ -51,8 +77,14 @@
       refresh: function () {
         this.$.localhost.value = this.settings.hosts.local;
         this.$.remotehost.value = this.settings.hosts.remote;
+        this.$.apikey.value = this.settings.appApiKey;
+        this.$.polling.value = this.settings.pollingPeriod / 1000;
+
         this.$.localhostDecorator.validate();
         this.$.remotehostDecorator.validate();
+        this.$.apiKeyDecorator.validate();
+
+        this.$.apiKeyAutogrow.update(this.$.apikey);
       },
 
       ready: function () {
@@ -60,22 +92,31 @@
       },
 
       validate: function () {
-        this.validForm = this.$.localhost.validity.valid && this.$.remotehost.validity.valid;
+        this.validForm = this.$.localhost.validity.valid &&
+            this.$.remotehost.validity.valid &&
+            this.$.apikey.validity.valid;
       },
 
       updateSettings: function () {
         if(this.validForm){
-          this.settings.hosts = {
-            local: this.$.localhost.value,
-            remote: this.$.remotehost.value
+          this.settings = {
+            hosts: {
+              local: this.$.localhost.value,
+              remote: this.$.remotehost.value
+            },
+            appApiKey: this.$.apikey.value,
+            pollingPeriod: this.$.polling.value * 1000
           };
 
           localStorage.setItem('localhost', this.settings.hosts.local);
           localStorage.setItem('remotehost', this.settings.hosts.remote);
+          localStorage.setItem('apikey', this.settings.appApiKey);
+          localStorage.setItem('polling', this.settings.pollingPeriod);
 
           EVT.setup({
             apiUrl: this.settings.hosts.remote,
-            localhostUrl: this.settings.hosts.local
+            localhostUrl: this.settings.hosts.local,
+            apiKey: this.settings.appApiKey
           });
 
           this.$.toast.show();

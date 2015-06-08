@@ -22,13 +22,13 @@ section:first-of-type .details {
 }
 
 section .label {
-  margin-top: 4px;
+  margin-top: 2px;
 }
 
 section .title {
   color: black;
   font-size: 16px;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 }
 
 section .description {
