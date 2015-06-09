@@ -98,7 +98,7 @@
 
       deviceChanged: function () {
         if(this.device){
-          if(this.polling !== 0){
+          if(parseInt(this.polling) !== 0){
             this.loopInterval = setInterval(this.refresh.bind(this), this.polling);
           } else {
             this.refresh();
