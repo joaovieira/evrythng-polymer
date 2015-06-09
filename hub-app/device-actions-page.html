@@ -64,8 +64,8 @@
         var actionType = target.attributes['data-actiontype-name'].value,
             $this = this;
 
-        this.user.action(actionType).create({
-          thng: $this.device.id
+        this.device.action(actionType).create({
+          user: $this.user.id
         },{
           localhost: true
         }).then(function () {
