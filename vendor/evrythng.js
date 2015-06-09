@@ -2587,7 +2587,7 @@ define('social/facebook',[
 
         FB.init({
           appId: appId,
-          version: 'v2.0'
+          version: 'v2.3'
         });
 
         // Get Login status and user info if connected. Build response as we
