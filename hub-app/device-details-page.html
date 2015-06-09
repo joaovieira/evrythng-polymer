@@ -77,7 +77,9 @@
       },
 
       isEmpty: function (obj) {
-        return Array.isArray(obj) && obj.length === 0 || this.keys(obj).length === 0;
+        return Array.isArray(obj) && obj.length === 0 ||
+                typeof obj === 'object' && this.keys(obj).length === 0 ||
+                typeof obj === 'string' && !obj;
       }
 
     });
