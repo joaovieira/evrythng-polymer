@@ -1133,14 +1133,17 @@ define('network/cors',[
   function _buildResponse(xhr, fullResponse){
     // XMLHttpRequest returns a not very usable single big string with all headers
     var _parseHeaders = function(headers) {
-      headers = headers.trim().split("\n");
+        var parsed = {};
 
-      var parsed = {};
+        if(headers){
+            headers = headers.trim().split("\n");
 
-      for (var h in headers) {
-        var header = headers[h].toLowerCase().match(/([^:]+):(.*)/);
-        parsed[header[1].trim()] = header[2].trim();
-      }
+            for (var h in headers) {
+                var header = headers[h].toLowerCase().match(/([^:]+):(.*)/);
+                parsed[header[1].trim()] = header[2].trim();
+            }
+        }
+
       return parsed;
     };
 
@@ -1148,7 +1151,8 @@ define('network/cors',[
         response = null;
 
     if (xhr.responseText) {
-      if (headers['content-type'].indexOf('application/json') !== -1) {
+        var contentType = headers['content-type'];
+      if (contentType && contentType.indexOf('application/json') !== -1) {
         // try to parse the response if looks like json
         try {
           response = JSON.parse(xhr.responseText);
