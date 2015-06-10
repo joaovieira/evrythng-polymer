@@ -49,7 +49,7 @@
       <div class="details" flex layout vertical>
         <template repeat="{{field in keys(device.customFields)}}">
           <div class="item">
-            <div class="title">{{isEmpty(device.customFields[field]) ? "None" : device.customFields[field]}}</div>
+            <div class="title">{{device.customFields[field]}}</div>
             <div class="label">{{field}}</div>
           </div>
         </template>
@@ -74,12 +74,6 @@
 
       keys: function (obj) {
         return obj? Object.keys(obj) : [];
-      },
-
-      isEmpty: function (obj) {
-        return Array.isArray(obj) && obj.length === 0 ||
-                typeof obj === 'object' && this.keys(obj).length === 0 ||
-                typeof obj === 'string' && !obj;
       }
 
     });
