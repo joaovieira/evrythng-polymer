@@ -74,6 +74,10 @@
 
       keys: function (obj) {
         return obj? Object.keys(obj) : [];
+      },
+
+      isEmpty: function (obj) {
+        return Array.isArray(obj) && obj.length === 0 || this.keys(obj).length === 0;
       }
 
     });
