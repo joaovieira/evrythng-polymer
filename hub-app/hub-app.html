@@ -47,8 +47,7 @@
         hosts: {
           local: localStorage.getItem('localhost') || 'http://192.168.0.12:8080',
           remote: localStorage.getItem('remotehost') || 'https://api-test.evrythng.net',
-          wsLocal: localStorage.getItem('wsLocal') || 'wss://192.168.0.13:443/mqtt',
-          wsRemote: localStorage.getItem('wsRemote') || 'wss://ws-test.evrythng.net:443/mqtt'
+          wsServer: localStorage.getItem('wsServer') || 'wss://ws-test.evrythng.net:443/mqtt'
         },
         appApiKey: localStorage.getItem('apikey') ||
         'hqpCUEnqyYnv5Gg3y0YYs0PuGMtgD8dgjRORX80ZElaGxOva32mZWP38cKFta45p3TLtIyEFjpHCMIEw',
@@ -104,7 +103,7 @@
         EVT.use(EVT.WS);
 
         EVT.WS.setup({
-          apiUrl: this.settings.hosts.wsRemote
+          apiUrl: this.settings.hosts.wsServer
         });
 
         EVT.setup({

@@ -33,22 +33,13 @@
                  placeholder="E.g. https://api.evrythng.com">
         </paper-input-decorator>
 
-        <paper-input-decorator id="wsLocalDecorator" label="Local hub WebSockets server"
+        <paper-input-decorator id="wsServerDecorator" label="Local hub WebSockets server"
                                autoValidate error="Please type a URL." floatinglabel>
           <input is="core-input"
-                 id="wsLocal"
+                 id="wsServer"
                  required
                  type="url"
                  placeholder="E.g. wss://192.168.0.13:443/mqtt">
-        </paper-input-decorator>
-
-        <paper-input-decorator id="wsRemoteDecorator" label="EVRYTHNG WebSockets server"
-                               autoValidate error="Please type a URL." floatinglabel>
-          <input is="core-input"
-                 id="wsRemote"
-                 required
-                 type="url"
-                 placeholder="wss://ws-test.evrythng.net:443/mqtt">
         </paper-input-decorator>
 
       </section>
@@ -99,14 +90,13 @@
       refresh: function () {
         this.$.localhost.value = this.settings.hosts.local;
         this.$.remotehost.value = this.settings.hosts.remote;
-        this.$.wsLocal.value = this.settings.hosts.wsLocal;
-        this.$.wsRemote.value = this.settings.hosts.wsRemote;
+        this.$.wsServer.value = this.settings.hosts.wsServer;
         this.$.apikey.value = this.settings.appApiKey;
         this.$.polling.value = this.settings.pollingPeriod / 1000;
 
         this.$.localhostDecorator.validate();
         this.$.remotehostDecorator.validate();
-        this.$.wsLocalDecorator.validate();
+        this.$.wsServerDecorator.validate();
         this.$.apiKeyDecorator.validate();
 
         this.$.apiKeyAutogrow.update(this.$.apikey);
@@ -119,8 +109,7 @@
       validate: function () {
         this.validForm = this.$.localhost.validity.valid &&
             this.$.remotehost.validity.valid &&
-            this.$.wsLocal.validity.valid &&
-            this.$.wsRemote.validity.valid &&
+            this.$.wsServer.validity.valid &&
             this.$.apikey.validity.valid;
       },
 
@@ -130,8 +119,7 @@
             hosts: {
               local: this.$.localhost.value,
               remote: this.$.remotehost.value,
-              wsLocal: this.$.wsLocal.value,
-              wsRemote: this.$.wsRemote.value
+              wsServer: this.$.wsServer.value
             },
             appApiKey: this.$.apikey.value,
             pollingPeriod: this.$.polling.value * 1000
@@ -139,8 +127,7 @@
 
           localStorage.setItem('localhost', this.settings.hosts.local);
           localStorage.setItem('remotehost', this.settings.hosts.remote);
-          localStorage.setItem('wsLocal', this.settings.hosts.wsLocal);
-          localStorage.setItem('wsRemote', this.settings.hosts.wsRemote);
+          localStorage.setItem('wsServer', this.settings.hosts.wsServer);
           localStorage.setItem('apikey', this.settings.appApiKey);
           localStorage.setItem('polling', this.settings.pollingPeriod);
 
@@ -151,7 +138,7 @@
           });
 
           EVT.WS.setup({
-            apiUrl: this.settings.hosts.wsRemote
+            apiUrl: this.settings.hosts.wsServer
           });
 
           this.$.toast.show();
