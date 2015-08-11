@@ -1,6 +1,6 @@
 {
   "name": "evrythng",
-  "version": "3.0.1",
+  "version": "3.1.2",
   "main": "dist/evrythng.js",
   "ignore": [
     "**/.*",
@@ -20,13 +20,13 @@
   "endpoint": "https://github.com/evrythng/evrythng.js.git",
   "dependencies": {},
   "homepage": "https://github.com/evrythng/evrythng.js",
-  "_release": "3.0.1",
+  "_release": "3.1.2",
   "_resolution": {
     "type": "version",
-    "tag": "3.0.1",
-    "commit": "3fe2a62b8f5a476a3812df97778fb9b5e2bd8c82"
+    "tag": "3.1.2",
+    "commit": "b4051ab021af71a8e6a629e6d3d29d3d9a26cd94"
   },
   "_source": "git://github.com/evrythng/evrythng.js.git",
-  "_target": "~3.0.1",
+  "_target": "^3.1.2",
   "_originalSource": "evrythng"
 }

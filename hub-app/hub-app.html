@@ -5,6 +5,8 @@
 <link rel="import" href="../bower_components/paper-spinner/paper-spinner.html">
 <!--<script src="../bower_components/evrythng/dist/evrythng.js"></script>-->
 <script src="../vendor/evrythng.js"></script>
+<script src="../bower_components/bower-mqttws/mqttws31.js"></script>
+<script src="../bower_components/evrythng-ws/dist/evrythng-ws.js"></script>
 
 <polymer-element name="hub-app" vertical layout>
   <template>
@@ -44,10 +46,11 @@
       settings: {
         hosts: {
           local: localStorage.getItem('localhost') || 'http://192.168.0.12:8080',
-          remote: localStorage.getItem('remotehost') || 'https://api-test.evrythng.net'
+          remote: localStorage.getItem('remotehost') || 'https://api-test.evrythng.net',
+          wsServer: localStorage.getItem('wsServer') || 'wss://ws-test.evrythng.net:443/mqtt'
         },
         appApiKey: localStorage.getItem('apikey') ||
-        'o8xZ4ga4wsY87WpAo8bR8iN398L4bUxgCPiIIbSTOk8nB37FT29l8KnJcHpkZ3SHlXkEM9YbvY20GMOD',
+        'hqpCUEnqyYnv5Gg3y0YYs0PuGMtgD8dgjRORX80ZElaGxOva32mZWP38cKFta45p3TLtIyEFjpHCMIEw',
         pollingPeriod: localStorage.getItem('polling') || 0
       },
 
@@ -96,6 +99,12 @@
          // repopulate history state so we get the popstate event again
          history.pushState(dummyState, '');
          }.bind(this);*/
+
+        EVT.use(EVT.WS);
+
+        EVT.WS.setup({
+          apiUrl: this.settings.hosts.wsServer
+        });
 
         EVT.setup({
           apiUrl: this.settings.hosts.remote,

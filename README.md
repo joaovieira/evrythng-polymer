@@ -1,10 +1,8 @@
-# hub-demo-polymer
+# evrythng-webclient-polymer
 
-Small mobile web app that interacts locally with Thng-Hub. Built with Web Components + Polymer + Material Design.
+Small mobile web app that interacts with EVRYTHNG. Built with Web Components + Polymer + Material Design.
 
-All requests are done locally if there is a Hub in the network and its address is configured correctly in the application.
-
-Url is **[http://joaovieira.github.io/hub-demo-polymer](http://joaovieira.github.io/hub-demo-polymer)**.
+All requests are done locally if there is an EVRYTHNG Hub in the network and its address is configured correctly in the application.
 
 ## Change Hub Address
 
