@@ -97,11 +97,19 @@
       },
 
       deviceChanged: function () {
+        var $this = this;
         if(this.device){
           if(parseInt(this.polling) !== 0){
             this.loopInterval = setInterval(this.refresh.bind(this), this.polling);
           } else {
+
+            // If polling interval is 0, subscribe via WebSockets.
             this.refresh();
+            this.device.property().subscribe(function(updatedProperties) {
+              if (updatedProperties && updatedProperties.length) {
+                $this.addUpdatedProperties(updatedProperties);
+              }
+            });
           }
         } else {
           this.properties = [];
@@ -172,6 +180,28 @@
           $this.selected = null;
           $this.$.toast.show();
         });
+      },
+
+      addUpdatedProperties: function (updatedProperties) {
+        var $this = this;
+        updatedProperties.forEach(function (p) {
+          $this.addUpdatedProperty(p);
+        });
+      },
+
+      addUpdatedProperty: function (updatedProperty) {
+        var match = null;
+
+        for (var i = 0; i < this.properties.length; i++) {
+          if (this.properties[i].key === updatedProperty.key) {
+            match = this.properties[i];
+          }
+        }
+
+        // Updating values for existing properties.
+        if (match) {
+          match.value = updatedProperty.value;
+        }
       }
 
     });
