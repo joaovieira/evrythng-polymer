@@ -33,6 +33,15 @@
                  placeholder="E.g. https://api.evrythng.com">
         </paper-input-decorator>
 
+        <paper-input-decorator id="wsServerDecorator" label="Local hub WebSockets server"
+                               autoValidate error="Please type a URL." floatinglabel>
+          <input is="core-input"
+                 id="wsServer"
+                 required
+                 type="url"
+                 placeholder="E.g. wss://192.168.0.13:443/mqtt">
+        </paper-input-decorator>
+
       </section>
 
       <section id="authentication" on-change="{{validate}}">
@@ -57,6 +66,9 @@
 
         <label class="label-text">Property Polling Period (seconds)</label>
         <paper-slider editable is="core-input" id="polling" min="0" max="5" snaps="true" step="1" pin="true"></paper-slider>
+        <small>
+          Setting Polling Period to 0 will automatically enable subscription via WebSockets.
+        </small>
 
       </section>
     </div>
@@ -78,11 +90,13 @@
       refresh: function () {
         this.$.localhost.value = this.settings.hosts.local;
         this.$.remotehost.value = this.settings.hosts.remote;
+        this.$.wsServer.value = this.settings.hosts.wsServer;
         this.$.apikey.value = this.settings.appApiKey;
         this.$.polling.value = this.settings.pollingPeriod / 1000;
 
         this.$.localhostDecorator.validate();
         this.$.remotehostDecorator.validate();
+        this.$.wsServerDecorator.validate();
         this.$.apiKeyDecorator.validate();
 
         this.$.apiKeyAutogrow.update(this.$.apikey);
@@ -95,6 +109,7 @@
       validate: function () {
         this.validForm = this.$.localhost.validity.valid &&
             this.$.remotehost.validity.valid &&
+            this.$.wsServer.validity.valid &&
             this.$.apikey.validity.valid;
       },
 
@@ -103,7 +118,8 @@
           this.settings = {
             hosts: {
               local: this.$.localhost.value,
-              remote: this.$.remotehost.value
+              remote: this.$.remotehost.value,
+              wsServer: this.$.wsServer.value
             },
             appApiKey: this.$.apikey.value,
             pollingPeriod: this.$.polling.value * 1000
@@ -111,6 +127,7 @@
 
           localStorage.setItem('localhost', this.settings.hosts.local);
           localStorage.setItem('remotehost', this.settings.hosts.remote);
+          localStorage.setItem('wsServer', this.settings.hosts.wsServer);
           localStorage.setItem('apikey', this.settings.appApiKey);
           localStorage.setItem('polling', this.settings.pollingPeriod);
 
@@ -118,6 +135,10 @@
             apiUrl: this.settings.hosts.remote,
             localhostUrl: this.settings.hosts.local,
             apiKey: this.settings.appApiKey
+          });
+
+          EVT.WS.setup({
+            apiUrl: this.settings.hosts.wsServer
           });
 
           this.$.toast.show();
