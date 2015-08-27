@@ -152,7 +152,8 @@
           });
 
           EVT.WS.setup({
-            apiUrl: this.settings.hosts.wsLocal
+            apiUrl: this.settings.hosts.wsRemote,
+            localhostUrl: this.settings.hosts.wsLocal
           });
 
           this.$.toast.show();
