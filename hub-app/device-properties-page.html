@@ -111,6 +111,8 @@
               } else {
                 $this.addUpdatedProperty(updatedProperties);
               }
+            }, function() {
+              console.log('Subscribed to: ' + $this.device.resource.path);
             });
           }
         } else {

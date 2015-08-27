@@ -61,6 +61,12 @@
     Polymer('device-page', {
 
       goBack: function () {
+        var path = this.device.resource.path;
+
+        this.device.property().unsubscribe(function() {
+          console.log('Unsubscribed to: ' + path);
+        });
+
         this.device = null;
       }
 

@@ -84,6 +84,7 @@
           password: scope.apiKey,
           keepAliveInterval: settings.keepAliveInterval,
           onSuccess: function () {
+            console.log('Connected to: ' + host);
             scope.wsClient = client;
             resolve(scope.wsClient);
           },
@@ -151,6 +152,22 @@
     },
 
     install: function (Resource, Action) {
+
+      function subscribePatch(messageCallback, successCallback, errorCallback) {
+        var oldUrl = EVT.WS.settings.apiUrl,
+          $this = this;
+
+        EVT.WS.settings.apiUrl = EVT.WS.settings.localhostUrl;
+
+        var promise = subscribe.call($this, messageCallback, successCallback, errorCallback).catch(function () {
+          return subscribe.call($this, messageCallback, successCallback, errorCallback);
+        });
+
+        // Restore old api Url
+        EVT.WS.settings.apiUrl = oldUrl;
+
+        return promise;
+      }
 
       // Subscribe to the current resource path topic. Create client if needed.
       // Message callback is called all the time a new message is received on that topic.
@@ -258,7 +275,7 @@
       }
 
       // Add WS methods to any Resource
-      Resource.prototype.subscribe = subscribe;
+      Resource.prototype.subscribe = subscribePatch;
       Resource.prototype.unsubscribe = unsubscribe;
       Resource.prototype.publish = publish;
     }
