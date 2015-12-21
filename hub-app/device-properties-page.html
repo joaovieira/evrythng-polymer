@@ -106,9 +106,13 @@
             // If polling interval is 0, subscribe via WebSockets.
             this.refresh();
             this.device.property().subscribe(function(updatedProperties) {
-              if (updatedProperties && updatedProperties.length) {
+              if (Array.isArray(updatedProperties)) {
                 $this.addUpdatedProperties(updatedProperties);
+              } else {
+                $this.addUpdatedProperty(updatedProperties);
               }
+            }, function() {
+              console.log('Subscribed to: ' + $this.device.resource.path);
             });
           }
         } else {
@@ -184,6 +188,7 @@
 
       addUpdatedProperties: function (updatedProperties) {
         var $this = this;
+
         updatedProperties.forEach(function (p) {
           $this.addUpdatedProperty(p);
         });

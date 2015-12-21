@@ -1,6 +1,6 @@
-# evrythng-webclient-polymer
+# evrythng-webapp
 
-Small mobile web app that interacts with EVRYTHNG. Built with Web Components + Polymer + Material Design.
+Sample mobile web app that interacts with EVRYTHNG. Built with Web Components + Polymer + Material Design.
 
 All requests are done locally if there is an EVRYTHNG Hub in the network and its address is configured correctly in the application.
 
