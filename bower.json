@@ -24,7 +24,6 @@
     "topeka-elements": "Polymer/topeka-elements#~0.5.2",
     "polymer-filters": "~0.2.1",
     "swipe-pages": "TheSeamau5/swipe-pages#master",
-    "bootstrap": "~3.3.4",
-    "evrythng-ws": "~1.0.0"
+    "bootstrap": "~3.3.4"
   }
 }

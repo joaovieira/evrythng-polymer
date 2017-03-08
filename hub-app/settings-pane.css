@@ -40,6 +40,10 @@ section > label {
   margin-top: 10px;
 }
 
+paper-progress {
+  box-sizing: content-box;
+}
+
 paper-slider::shadow #sliderBar::shadow #activeProgress,
 paper-slider::shadow #sliderKnobInner,
 paper-slider::shadow #sliderKnobInner::before,
